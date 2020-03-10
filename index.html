@@ -37,7 +37,9 @@
                             <td>{{ o.date_due }}</td>
                             <td>{{ o.name }}</td>
                             <td>{{ o.value | currency 'R$ ' 2 }}</td>
-                            <td>{{ o.done | doneLabel }}</td>
+                            <td :class="{'bg-success': o.done, 'bg-danger': !o.done}">
+                                {{ o.done | doneLabel }}
+                            </td>
                             <td>
                                 <a href="#" @click.prevent="loadBill(o)">Editar</a>
                             </td>
@@ -52,7 +54,7 @@
                     <br /><br />
                     <label>Nome:</label>
                     <select v-model="bill.name">
-                        <option v-for="o in names" value="{{ o }}">{{ o }}</option>
+                        <option v-for="o in names" :value="o">{{ o }}</option>
                     </select>
                     <br /><br />
                     <label>Valor:</label>
