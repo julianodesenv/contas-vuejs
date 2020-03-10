@@ -6,6 +6,7 @@ var app = new Vue({
             {id: 0, name: "Listar contas"},
             {id: 1, name: "Criar conta"}
         ],
+        activedView: 0,
         bills: [
             {date_due: '20/20/2020', name: 'Conta de luz', value: 130.99, done: 1},
             {date_due: '20/20/2020', name: 'Conta de água', value: 70, done: 1},
@@ -28,8 +29,10 @@ var app = new Vue({
     },
     methods: {
         showView: function (id) {
-            console.log(id);
+            this.activedView = id;
         }
     }
 });
+
+
 
