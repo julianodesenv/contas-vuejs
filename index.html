@@ -10,7 +10,8 @@
 <body id="app">
     <div class="container">
         <h1>{{ title }}</h1>
-        <h3>{{ status }}</h3>
+        <hr />
+        <h3 :class="{'text-info': status === false, 'text-success': status === 0, 'text-danger': status > 0}">{{ status | statusGeneral }}</h3>
 
         <ul class="nav">
             <li class="nav-item" v-for="o in menus">
@@ -33,7 +34,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="(index, o) in bills">
-                            <td>{{ index }}</td>s
+                            <td>{{ index }}</td>
                             <td>{{ o.date_due }}</td>
                             <td>{{ o.name }}</td>
                             <td>{{ o.value | currency 'R$ ' 2 }}</td>
@@ -41,7 +42,8 @@
                                 {{ o.done | doneLabel }}
                             </td>
                             <td>
-                                <a href="#" @click.prevent="loadBill(o)">Editar</a>
+                                <a href="#" @click.prevent="loadBill(o)">Editar</a> |
+                                <a href="#" @click.prevent="deleteBill(o)">Excluir</a>
                             </td>
                         </tr>
                     </tbody>
@@ -59,6 +61,9 @@
                     <br /><br />
                     <label>Valor:</label>
                     <input type="text" v-model="bill.value">
+                    <br /><br />
+                    <label>Pago?</label>
+                    <input type="checkbox" v-model="bill.done">
                     <br /><br />
                     <input type="submit" value="Enviar" />
                 </form>
