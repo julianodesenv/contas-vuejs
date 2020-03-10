@@ -14,7 +14,7 @@
 
         <ul class="nav">
             <li class="nav-item" v-for="o in menus">
-                <a class="nav-link" href="javascript:void(0)" v-on:click="showView(o.id)">{{ o.name}}</a>
+                <a class="nav-link" href="#" @click.prevent="showView(o.id)">{{ o.name}}</a>
             </li>
         </ul>
 
@@ -42,8 +42,19 @@
                 </table>
             </div>
             <div class="col-md-12" v-if="activedView == 1">
-                <form name="form" class="form">
-                    Test: <input type="text">
+                <form name="form" class="form" @submit.prevent="submit">
+                    <label>Vencimento:</label>
+                    <input type="text" v-model="bill.date_due">
+                    <br /><br />
+                    <label>Nome:</label>
+                    <select v-model="bill.name">
+                        <option v-for="o in names" value="{{ o }}">{{ o }}</option>
+                    </select>
+                    <br /><br />
+                    <label>Valor:</label>
+                    <input type="text" v-model="bill.value">
+                    <br /><br />
+                    <input type="submitgit" value="Enviar" />
                 </form>
             </div>
         </div>
