@@ -72,6 +72,14 @@ var app = new Vue({
     }
 });
 
+Vue.filter('doneLabel', function (value) {
+    if (value == 0) {
+        return "Não paga";
+    } else {
+        return "Paga";
+    }
+});
+
 /*
 app.$watch('test', function (novoValor, velhoValor) {
     console.log(velhoValor);
