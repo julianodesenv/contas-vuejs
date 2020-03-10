@@ -28,15 +28,19 @@
                             <th>Nome</th>
                             <th>Valor</th>
                             <th>Paga?</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(index, o) in bills">
-                            <td>{{ index }}</td>
+                            <td>{{ index }}</td>s
                             <td>{{ o.date_due }}</td>
                             <td>{{ o.name }}</td>
                             <td>{{ o.value }}</td>
                             <td>{{ o.done }}</td>
+                            <td>
+                                <a href="#" @click.prevent="loadBill(o)">Editar</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -54,7 +58,7 @@
                     <label>Valor:</label>
                     <input type="text" v-model="bill.value">
                     <br /><br />
-                    <input type="submitgit" value="Enviar" />
+                    <input type="submit" value="Enviar" />
                 </form>
             </div>
         </div>
