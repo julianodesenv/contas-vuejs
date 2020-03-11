@@ -19,39 +19,104 @@ Vue.filter('statusGeneral', function (value) {
 
 });
 
-var app = new Vue({
-    el: "#app",
-    data: {
-        test: '',
-        title: "Contas a pagar",
-        menus: [
-            {id: 0, name: "Listar contas"},
-            {id: 1, name: "Criar conta"}
-        ],
-        activedView: 0,
-        formType: 'insert',
-        bill: {
-            date_due: '',
-            name: '',
-            value: 0,
-            done: false
-        },
-        names: [
-            'Conta de luz',
-            'Conta de água',
-            'Conta de telefone',
-            'Supermercado',
-            'Empréstimo',
-            'Gasolina'
-        ],
-        bills: [
-            {date_due: '20/20/2020', name: 'Conta de luz', value: 130.99, done: true},
-            {date_due: '20/20/2020', name: 'Conta de água', value: 70, done: true},
-            {date_due: '20/20/2020', name: 'Conta de telefone', value: 140, done: false},
-            {date_due: '20/20/2020', name: 'Supermercado', value: 240.35, done: false},
-            {date_due: '20/20/2020', name: 'Empréstimo', value: 0, done: false},
-            {date_due: '20/20/2020', name: 'Gasolina', value: 250.99, done: false}
-        ]
+var appComponent = Vue.extend({
+    template: `
+    <div class="container">
+        <h1>{{ title }}</h1>
+        <hr />
+        <h3 :class="{'text-info': status === false, 'text-success': status === 0, 'text-danger': status > 0}">{{ status | statusGeneral }}</h3>
+
+        <ul class="nav">
+            <li class="nav-item" v-for="o in menus">
+                <a class="nav-link" href="#" @click.prevent="showView(o.id)">{{ o.name}}</a>
+            </li>
+        </ul>
+
+        <div class="row">
+            <div class="col-md-12" v-if="activedView == 0">
+                <table class="table" border="1" cellpadding="0">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Vencimento</th>
+                        <th>Nome</th>
+                        <th>Valor</th>
+                        <th>Paga?</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(index, o) in bills">
+                        <td>{{ index }}</td>
+                        <td>{{ o.date_due }}</td>
+                        <td>{{ o.name }}</td>
+                        <td>{{ o.value | currency 'R$ ' 2 }}</td>
+                        <td :class="{'bg-success': o.done, 'bg-danger': !o.done}">
+                            {{ o.done | doneLabel }}
+                        </td>
+                        <td>
+                            <a href="#" @click.prevent="loadBill(o)">Editar</a> |
+                            <a href="#" @click.prevent="deleteBill(o)">Excluir</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12" v-if="activedView == 1">
+                <form name="form" class="form" @submit.prevent="submit">
+                    <label>Vencimento:</label>
+                    <input type="text" v-model="bill.date_due">
+                    <br /><br />
+                    <label>Nome:</label>
+                    <select v-model="bill.name">
+                        <option v-for="o in names" :value="o">{{ o }}</option>
+                    </select>
+                    <br /><br />
+                    <label>Valor:</label>
+                    <input type="text" v-model="bill.value">
+                    <br /><br />
+                    <label>Pago?</label>
+                    <input type="checkbox" v-model="bill.done">
+                    <br /><br />
+                    <input type="submit" value="Enviar" />
+                </form>
+            </div>
+        </div>
+    </div>
+    `,
+    data: function () {
+        return {
+            test: '',
+            title: "Contas a pagar",
+            menus: [
+                {id: 0, name: "Listar contas"},
+                {id: 1, name: "Criar conta"}
+            ],
+            activedView: 0,
+            formType: 'insert',
+            bill: {
+                date_due: '',
+                name: '',
+                value: 0,
+                done: false
+            },
+            names: [
+                'Conta de luz',
+                'Conta de água',
+                'Conta de telefone',
+                'Supermercado',
+                'Empréstimo',
+                'Gasolina'
+            ],
+            bills: [
+                {date_due: '20/20/2020', name: 'Conta de luz', value: 130.99, done: true},
+                {date_due: '20/20/2020', name: 'Conta de água', value: 70, done: true},
+                {date_due: '20/20/2020', name: 'Conta de telefone', value: 140, done: false},
+                {date_due: '20/20/2020', name: 'Supermercado', value: 240.35, done: false},
+                {date_due: '20/20/2020', name: 'Empréstimo', value: 0, done: false},
+                {date_due: '20/20/2020', name: 'Gasolina', value: 250.99, done: false}
+            ]
+        };
     },
     computed: {
         status: function () {
@@ -100,6 +165,12 @@ var app = new Vue({
             }
         }
     }
+});
+
+Vue.component('app-component', appComponent);
+
+var app = new Vue({
+    el: "#app"
 });
 
 /*
