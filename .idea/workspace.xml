@@ -72,7 +72,8 @@
       <workItem from="1583882415911" duration="4365000" />
       <workItem from="1583936647597" duration="1208000" />
       <workItem from="1584023556277" duration="2431000" />
-      <workItem from="1584036050709" duration="233000" />
+      <workItem from="1584036050709" duration="1618000" />
+      <workItem from="1584191195103" duration="2059000" />
     </task>
     <servers />
   </component>
@@ -80,6 +81,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="739" y="263" key="FileChooserDialogImpl" timestamp="1584037971766">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="739" y="263" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1584037971766" />
     <state x="656" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1584036051359">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
